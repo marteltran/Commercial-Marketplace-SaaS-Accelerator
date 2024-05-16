@@ -57,6 +57,9 @@ public class Startup
     {
         services.Configure<CookiePolicyOptions>(options =>
         {
+            options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always;
+            options.Secure = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
+
             // This lambda determines whether user consent for non-essential cookies is needed for a given request.
             options.CheckConsentNeeded = context => true;
             options.MinimumSameSitePolicy = SameSiteMode.None;

@@ -144,6 +144,8 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -174,11 +176,10 @@
             e.preventDefault();
             var newItem = $("#tbodydynamicload").html();
             var findstrinig = 'itemIndex';
-            var regx = new RegExp(findstrinig, 'g');
-            
+            var regx = new RegExp(findstrinig, 'g');            
             newItem = newItem.replace(regx, itemIndex);
-    
             $("#tblbody").append(newItem);
+
         });
     });
 
@@ -239,12 +240,14 @@
             success: function (result) {
                 debugger;
                 successconfirmDialog();
-                $('#myModal').html(result);
+                @* $('#myModal').html(result); *@
+                $('#myModal').html(DOMPurify.sanitize(result));
             },
             Error:
                 function (result) {
                     errorconfirmDialog();
-                    $('#myModal').html(result);
+                    $('#myModal').html(DOMPurify.sanitize(result));
+                    @* $('#myModal').html(result); *@
                 }
         });
     }

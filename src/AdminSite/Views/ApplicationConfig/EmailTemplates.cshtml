@@ -81,6 +81,8 @@
     </div>
 </div>
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script>
 
     function ViewEmailTemplateDetailsByStatus(status) {
@@ -91,7 +93,8 @@
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             success: function (data) {
-                $('#emailTemplatesModal').html(data);
+                @* $('#emailTemplatesModal').html(data); *@
+                document.getElementById('emailTemplatesModal').innerHTML = DOMPurify.sanitize(data);
             },
             error: function () {
                  swal({
