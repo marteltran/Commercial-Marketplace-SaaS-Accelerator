@@ -49,7 +49,7 @@
     </div>
 </div>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script>
     $("body").on("click", "#btnAdd", function () {
         var formValid = document.forms["formKnownUsers"].checkValidity();
@@ -59,7 +59,10 @@
             var tBody = $("#tblKnownUsers > TBODY")[0];
             var row = tBody.insertRow(-1);
             var cell = $(row.insertCell(-1));
-            cell.html(txtUserEmail.val());
+
+            @* cell.html(txtUserEmail.val()); *@
+            cell.html(DOMPurify.sanitize(txtUserEmail.val()));
+
             cell = $(row.insertCell(-1));
             var btnRemove = $("<input />");
             btnRemove.attr("class","btn btn-danger btn-sm delete");
