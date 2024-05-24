@@ -228,7 +228,7 @@
     }
 
     function saveOfferParameters() {
-        debugger;
+        @* debugger; *@
         var csrftoken = $('input[name="__RequestVerificationToken"]').val();
         var formobject = $('#frmOfferattributes').serialize();
         $.ajax({
@@ -238,16 +238,14 @@
             data: formobject,
             cache: false,
             success: function (result) {
-                debugger;
+                @* debugger; *@
                 successconfirmDialog();
-                @* $('#myModal').html(result); *@
-                $('#myModal').html(DOMPurify.sanitize(result));
+                $('#myModal').html(result);
             },
             Error:
                 function (result) {
                     errorconfirmDialog();
-                    $('#myModal').html(DOMPurify.sanitize(result));
-                    @* $('#myModal').html(result); *@
+                    $('#myModal').html(result);
                 }
         });
     }

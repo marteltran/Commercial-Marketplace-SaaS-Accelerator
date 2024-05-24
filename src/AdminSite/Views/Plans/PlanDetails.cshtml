@@ -128,11 +128,11 @@
                                                 </td>
                                                 <td>
                                                     @Html.CheckBoxFor(model => model.PlanEvents[i].Isactive, new { name = "PlanEvents[@i].Isactive", id = string.Format("PlanEvents_Isactive_{0}", @i) })
-                                                    @*<input type="checkbox" id="PlanEvents_IsEnabled_@i" name="PlanEvents[@i].IsEnabled" value="@Model.PlanEvents[i].IsEnabled" />*@
+                                                    @* <input type="checkbox" id="PlanEvents_IsEnabled_@i" name="PlanEvents[@i].IsEnabled" value="@Model.PlanEvents[i].IsEnabled" /> *@
                                                 </td>
                                                 <td>
                                                     @Html.CheckBoxFor(model => model.PlanEvents[i].CopyToCustomer, new { name = "PlanEvents[@i].CopyToCustomer", id = string.Format("PlanEvents_CopyToCustomer_{0}", @i) })
-                                                    @*<input type="checkbox" id="PlanEvents_IsEnabled_@i" name="PlanEvents[@i].IsEnabled" value="@Model.PlanEvents[i].IsEnabled" />*@
+                                                    @* <input type="checkbox" id="PlanEvents_IsEnabled_@i" name="PlanEvents[@i].IsEnabled" value="@Model.PlanEvents[i].IsEnabled" /> *@
                                                 </td>
                                                 <td><input type="text" style="width:200px;" id="PlanEvents_SuccessStateEmails_@i" name="PlanEvents[@i].SuccessStateEmails" value="@Model.PlanEvents[i].SuccessStateEmails" /></td>
                                                 <td><input type="text" style="width:200px;" id="PlanEvents_FailureStateEmails_@i" name="PlanEvents[@i].FailureStateEmails" value="@Model.PlanEvents[i].FailureStateEmails" /></td>
@@ -157,6 +157,9 @@
 
 
 </body>
+
+<script src="~/js/sanitize_properties.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script>
 
     function successconfirmDialog() {
@@ -175,6 +178,7 @@
             timer: 1000
         })
     }
+
     function savePlanParameters() {
         var formobject = $('#frmPlanEvents').serialize();
         var csrftoken = $('input[name="__RequestVerificationToken"]').val();
@@ -185,14 +189,18 @@
             data: formobject,
             cache: false,
             success: function (result) {
-                debugger;
+                @* console.log("result: " + result); *@
+                @* debugger; *@
                 successconfirmDialog();
-                $('#myModal').html(result);
+                const cleanresult = DOMPurify.sanitize(result, customConfig);
+                $('#myModal').html(cleanresult);
+                @* $('#myModal').html(result); *@
             },
             Error:
                 function (result) {
                     errorconfirmDialog();
-                    $('#myModal').html(result);
+                    const cleanresult = DOMPurify.sanitize(result, customConfig);
+                    $('#myModal').html(cleanresult);
                 }
         });
     }

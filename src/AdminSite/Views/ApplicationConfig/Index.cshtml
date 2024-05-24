@@ -93,6 +93,10 @@
         </div>
     </div>
 </div>
+
+<script src="~/js/sanitize_properties.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
+@* <script src="https://cdnjs.cloudflare.com/ajax/libs/js-xss/0.1.18/xss.min.js" integrity="sha512-QeAnJ7zjFC9kztzip9l/9FSTFAdsZ9Sp946pDADpYfVsesOIKBrcxiMRx4FYOSqUCZ1cB3lY1CdSZqnwBD9ukQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> *@
 <script>
     function changeValue(){
         document.getElementById('tempdataLabel').innerHTML="In progress ..."    
@@ -106,7 +110,8 @@
                 contentType: "application/json; charset=utf-8",
                 datatype: "json",
                 success: function (data) {
-                    $('#myModal').html(data);
+                    const cleandata = DOMPurify.sanitize(data, customConfig);
+                    $('#myModal').html(cleandata);
                 },
                 error: function () {
                     swal({
