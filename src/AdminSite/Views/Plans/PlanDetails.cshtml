@@ -123,7 +123,7 @@
                                                     <input id="PlanEvents_Id_@i" type="hidden" value="@Model.PlanEvents[i].Id" class="iHidden" name="PlanEvents[@i].Id" />
                                                     <input id="PlanEvents_PlanId_@i" type="hidden" value="@Model.PlanEvents[i].PlanId" class="iHidden" name="PlanEvents[@i].PlanId" />
                                                     <input id="PlanEvents_EventId_@i" type="hidden" value="@Model.PlanEvents[i].EventId" class="iHidden" name="PlanEvents[@i].EventId" />
-                                                    @*<input type="text" style="width:70px;" id="PlanAttributes[@i].DisplayName" name="PlanAttributes[@i].DisplayName" value="@Model.PlanAttributes[i].DisplayName" />*@
+                                                    @* <input type="text" style="width:70px;" id="PlanAttributes[@i].DisplayName" name="PlanAttributes[@i].DisplayName" value="@Model.PlanAttributes[i].DisplayName" /> *@
                                                     @Model.PlanEvents[i].EventName
                                                 </td>
                                                 <td>
@@ -158,7 +158,7 @@
 
 </body>
 
-<script src="~/js/sanitize_properties.js"></script>
+@* <script src="~/js/sanitize_properties.js"></script> *@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script>
 
@@ -182,6 +182,9 @@
     function savePlanParameters() {
         var formobject = $('#frmPlanEvents').serialize();
         var csrftoken = $('input[name="__RequestVerificationToken"]').val();
+        console.log("formobject = " + formobject)
+        console.log("csrftoken = " + csrftoken)
+
         $.ajax({
             url: 'Plans/PlanDetails',
             type: 'POST',
@@ -192,15 +195,16 @@
                 @* console.log("result: " + result); *@
                 @* debugger; *@
                 successconfirmDialog();
-                const cleanresult = DOMPurify.sanitize(result, customConfig);
+                var cleanresult = DOMPurify.sanitize(result, customConfig);
+                @* console.log("cleanresult: " + cleanresult); *@
                 $('#myModal').html(cleanresult);
                 @* $('#myModal').html(result); *@
             },
             Error:
                 function (result) {
                     errorconfirmDialog();
-                    const cleanresult = DOMPurify.sanitize(result, customConfig);
-                    $('#myModal').html(cleanresult);
+                    var cleanerror = DOMPurify.sanitize(result, customConfig);
+                    $('#myModal').html(cleanrerror);
                 }
         });
     }

@@ -163,7 +163,7 @@
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             success: function (data) {
-                const cleandata = DOMPurify.sanitize(data, customConfig);
+                var cleandata = DOMPurify.sanitize(data, customConfig);
                 $('#myModal').html(cleandata);
                 $('#myModal').modal();
             },
@@ -184,7 +184,7 @@
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             success: function (data) {
-                const cleandata = DOMPurify.sanitize(data, customConfig);
+                var cleandata = DOMPurify.sanitize(data, customConfig);
                 $('#myModal').html(cleandata);
                 $('#myModal').modal();
 
@@ -206,7 +206,7 @@
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             success: function (data) {
-                const cleandata = DOMPurify.sanitize(data, customConfig);
+                var cleandata = DOMPurify.sanitize(data, customConfig);
                 $('#myModal').html(cleandata);                
                 $('#myModal').modal();
 

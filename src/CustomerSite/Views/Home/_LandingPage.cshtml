@@ -227,6 +227,8 @@ else
         </div>
     </div>
 }
+
+<script src="~/js/sanitize_properties.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script type="text/javascript">
 
@@ -240,7 +242,10 @@ else
                 cache: false,
                 success: function (result) {
                     @* $('#divIndex').html(result); *@
-                    document.getElementById('divIndex').innerHTML = DOMPurify.sanitize(result);
+                    @* document.getElementById('divIndex').innerHTML = DOMPurify.sanitize(result); *@
+                    var cleanresult = DOMPurify.sanitize(result, customConfig);
+                    $('#divIndex').html(cleanresult);
+
                 },
                 Error:
                     function (result) {

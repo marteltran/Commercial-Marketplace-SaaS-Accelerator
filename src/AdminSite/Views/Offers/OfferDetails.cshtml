@@ -145,6 +145,7 @@
     </div>
 </div>
 
+<script src="~/js/sanitize_properties.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -240,12 +241,16 @@
             success: function (result) {
                 @* debugger; *@
                 successconfirmDialog();
-                $('#myModal').html(result);
+                var cleanresult = DOMPurify.sanitize(result, customConfig);
+                $('#myModal').html(cleanresult);
+                @* $('#myModal').html(result); *@
             },
             Error:
                 function (result) {
                     errorconfirmDialog();
-                    $('#myModal').html(result);
+                    var cleanerror = DOMPurify.sanitize(result, customConfig);
+                    $('#myModal').html(cleanerror);
+                    @* $('#myModal').html(result); *@
                 }
         });
     }

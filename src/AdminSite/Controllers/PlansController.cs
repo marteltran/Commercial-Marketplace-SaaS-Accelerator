@@ -8,6 +8,7 @@ using Marketplace.SaaS.Accelerator.Services.Models;
 using Marketplace.SaaS.Accelerator.Services.Services;
 using Marketplace.SaaS.Accelerator.Services.Utilities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.Logging;
 
 namespace Marketplace.SaaS.Accelerator.AdminSite.Controllers;
@@ -97,13 +98,24 @@ public class PlansController : BaseController
     /// </returns>
     public IActionResult PlanDetails(Guid planGuId)
     {
+        this.logger.Info($"mt-PlanDetails(Guid planGuid)");
         this.logger.Info(HttpUtility.HtmlEncode($"Plans Controller / PlanDetails:  planGuId {planGuId}"));
         try
         {
             PlansModel plans = new PlansModel();
             this.TempData["ShowWelcomeScreen"] = "True";
             var currentUserDetail = this.usersRepository.GetPartnerDetailFromEmail(this.CurrentUserEmailAddress);
+
+            //mt-ERROR 500: Object reference not set to any instance of an object
+            //mt- Cause by below function return NULL
+            //mt- There is no plan match the Guid
+            //ex: planGuId f513144a-ae64-499a-9c34-dcaf311a8676
             plans = this.plansService.GetPlanDetailByPlanGuId(planGuId);
+
+            this.logger.Info($"mt-plans = " + plans.DisplayName);
+            this.logger.Info($"mt-plans = " + plans.OfferName);
+            this.logger.Info($"mt-plans = " + plans.PlanAttributes);
+            this.logger.Info($"mt-plans = " + plans.PlanEvents);
             return this.PartialView(plans);
         }
         catch (Exception ex)
@@ -124,6 +136,7 @@ public class PlansController : BaseController
     [ValidateAntiForgeryToken]
     public IActionResult PlanDetails(PlansModel plans)
     {
+        this.logger.Info($"mt-PlanDetails(PlansModel plans)");
         this.logger.Info(HttpUtility.HtmlEncode($"Plans Controller / PlanDetails:  plans {JsonSerializer.Serialize(plans)}"));
         try
         {
@@ -132,16 +145,19 @@ public class PlansController : BaseController
             {
                 if (plans.PlanAttributes != null)
                 {
+                    //mt- Display plan Parameters
                     var inputAtttributes = plans.PlanAttributes.Where(s => s.Type.ToLower() == "input").ToList();
+                    this.logger.Info($"mt-InputAtttributes = " + inputAtttributes);
                     foreach (var attributes in inputAtttributes)
                     {
                         attributes.UserId = currentUserDetail.UserId;
                         this.plansService.SavePlanAttributes(attributes);
                     }
                 }
-
+                //mt- Display Plan Events
                 if (plans.PlanEvents != null)
                 {
+                    this.logger.Info($"mt-PlanEvents = " + plans.PlanEvents);
                     foreach (var events in plans.PlanEvents)
                     {
                         events.UserId = currentUserDetail.UserId;
