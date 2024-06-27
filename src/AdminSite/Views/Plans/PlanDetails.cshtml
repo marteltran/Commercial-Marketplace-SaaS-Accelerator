@@ -158,7 +158,7 @@
 
 </body>
 
-<script src="~/js/sanitize_properties.js"></script>
+@* <script src="~/js/sanitize_properties.js"></script> *@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script>
 
@@ -192,15 +192,15 @@
                 @* console.log("result: " + result); *@
                 @* debugger; *@
                 successconfirmDialog();
-                const cleanresult = DOMPurify.sanitize(result, customConfig);
+                var cleanresult = DOMPurify.sanitize(result, customConfig);
                 $('#myModal').html(cleanresult);
                 @* $('#myModal').html(result); *@
             },
             Error:
                 function (result) {
                     errorconfirmDialog();
-                    const cleanresult = DOMPurify.sanitize(result, customConfig);
-                    $('#myModal').html(cleanresult);
+                    var cleanerror = DOMPurify.sanitize(result, customConfig);
+                    $('#myModal').html(cleanrerror);
                 }
         });
     }

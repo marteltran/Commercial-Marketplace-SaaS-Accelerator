@@ -149,16 +149,32 @@ public class Startup
             app.UseHsts();
         }
 
+        // app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
+
+
+        //mt- Middleware to add CSP Header to prevent clickjacking vunerability
+        app.Use(async(context, next) =>
+            {
+                context.Response.Headers.Add("Content-Security-Policy", "frame-ancestor 'self' https://ttap-marketplace-portal.azurewebsites.net ");
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
+                await next();            
+            }
+        );
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseCookiePolicy();
         app.UseAuthentication();
+        app.UseAuthorization();
         app.UseMvc(routes =>
         {
             routes.MapRoute(
                 name: "default",
                 template: "{controller=Home}/{action=Index}/{id?}");
         });
+
     }
 
     private static void InitializeRepositoryServices(IServiceCollection services)
