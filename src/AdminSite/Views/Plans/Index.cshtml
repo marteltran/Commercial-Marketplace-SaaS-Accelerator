@@ -86,7 +86,8 @@
             success: function (data) {
                 var cleandata = DOMPurify.sanitize(data, customConfig);
                 $('#myModal').html(cleandata);
-                //$('#myModal').modal();
+                @* $('#myModal').html(data); *@
+                $('#myModal').modal();
             },
             error: function () {
                 alert("Content load failed.");
