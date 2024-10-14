@@ -1,4 +1,4 @@
-﻿@*@using Microsoft.Marketplace.SaasKit.Models*@
+﻿welcome@*@using Microsoft.Marketplace.SaasKit.Models*@
 
 @using Marketplace.SaaS.Accelerator.Services.Models
 @model Marketplace.SaaS.Accelerator.Services.Models.SubscriptionResultExtension
@@ -210,46 +210,43 @@ else
 {
     <div class="pt-5">
         <div class="card p-3 ">
+            <div>
+                <p><img src="/TTAP-Logo.png" style="width:400px;height:60px"  /></p>
+            </div>
             <div class="text-center">
                 <h1 class="display-4">Welcome</h1>
             </div>
-            <div class="text-left">
+            <div class="text-center">
                 <p>
-                    Get started with integrating your <b> Software as a Service (SaaS) </b> solution with the <b> SaaS fulfillment APIs version 2 in Microsoft commercial marketplace. </b>
+                    Thank you for showing interest in our product. We are glad and excited to be your business partner soon.
                 </p>
-                <p><a href="https://docs.microsoft.com/en-us/azure/marketplace/partner-center-portal/pc-saas-fulfillment-api-v2" target="_blank">Click here </a><span>for the API documentation.</span> </p>
-            </div>
-            <div>
-                <b>To purchase this SaaS offer:</b>
-                <ul>
-                    <li>Search for resources of type <b> Software as a Service (SaaS) </b></li>
-                    <li>Search for your offer</li>
-                    <li>Click <b> Create</b> to subscribe to the offer</li>
-                    <li>Click <b>Configure Account </b> after the subscription created</li>
-                </ul>
+                <p>
+                    A Sale Representative will shortly contact you to discuss your need and other details.
+                </p>
             </div>
         </div>
     </div>
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
 <script type="text/javascript">
 
     function SubscriptionOperation(subscriptionId, planId, operation) {
         if (validate()) {
             var formobject = $('#frmIndex').serialize();
-            var csrftoken = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
                 url: '/Home/SubscriptionOperation',
                 type: 'POST',
-                headers: { RequestVerificationToken: csrftoken },
                 data: formobject + "&subscriptionId=" + subscriptionId + "&planId=" + planId + "&operation=" + operation,
                 cache: false,
                 success: function (result) {
-                    $('#divIndex').html(result);
+                    @* $('#divIndex').html(result); *@
+                    document.getElementById('divIndex').innerHTML = DOMPurify.sanitize(result);
                 },
                 Error:
                     function (result) {
-                        $('#divIndex').html(result);
-                    }
+                        @* $('#divIndex').html(result); *@
+                        document.getElementById('divIndex').innerHTML = DOMPurify.sanitize(result);
+                }
             });
         }
         else {

@@ -64,21 +64,7 @@ public class Startup
             options.MinimumSameSitePolicy = SameSiteMode.None;
         });
 
-        var config = new SaaSApiClientConfiguration()
-        {
-            AdAuthenticationEndPoint = this.Configuration["SaaSApiConfiguration:AdAuthenticationEndPoint"],
-            ClientId = this.Configuration["SaaSApiConfiguration:ClientId"],
-            ClientSecret = this.Configuration["SaaSApiConfiguration:ClientSecret"],
-            MTClientId = this.Configuration["SaaSApiConfiguration:MTClientId"],
-            FulFillmentAPIBaseURL = this.Configuration["SaaSApiConfiguration:FulFillmentAPIBaseURL"],
-            FulFillmentAPIVersion = this.Configuration["SaaSApiConfiguration:FulFillmentAPIVersion"],
-            GrantType = this.Configuration["SaaSApiConfiguration:GrantType"],
-            Resource = this.Configuration["SaaSApiConfiguration:Resource"],
-            SaaSAppUrl = this.Configuration["SaaSApiConfiguration:SaaSAppUrl"],
-            SignedOutRedirectUri = this.Configuration["SaaSApiConfiguration:SignedOutRedirectUri"],
-            TenantId = this.Configuration["SaaSApiConfiguration:TenantId"],
-            Environment = this.Configuration["SaaSApiConfiguration:Environment"]
-        };
+        var config = new SaaSApiClientConfiguration() { AdAuthenticationEndPoint = this.Configuration["SaaSApiConfiguration:AdAuthenticationEndPoint"], ClientId = this.Configuration["SaaSApiConfiguration:ClientId"], ClientSecret = this.Configuration["SaaSApiConfiguration:ClientSecret"], MTClientId = this.Configuration["SaaSApiConfiguration:MTClientId"], FulFillmentAPIBaseURL = this.Configuration["SaaSApiConfiguration:FulFillmentAPIBaseURL"], FulFillmentAPIVersion = this.Configuration["SaaSApiConfiguration:FulFillmentAPIVersion"], GrantType = this.Configuration["SaaSApiConfiguration:GrantType"], Resource = this.Configuration["SaaSApiConfiguration:Resource"], SaaSAppUrl = this.Configuration["SaaSApiConfiguration:SaaSAppUrl"], SignedOutRedirectUri = this.Configuration["SaaSApiConfiguration:SignedOutRedirectUri"], TenantId = this.Configuration["SaaSApiConfiguration:TenantId"], Environment = this.Configuration["SaaSApiConfiguration:Environment"] };
         var creds = new ClientSecretCredential(config.TenantId.ToString(), config.ClientId.ToString(), config.ClientSecret);
 
         services
