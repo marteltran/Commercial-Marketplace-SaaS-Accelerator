@@ -103,9 +103,11 @@ BEGIN
 END;
 GO"
 
-Invoke-Sqlcmd -query $compatibilityScript -ServerInstance $Server -database $Database -Username $User -Password $Pass
+# Invoke-Sqlcmd -query $compatibilityScript -ServerInstance $Server -database $Database -Username $User -Password $Pass
+Invoke-Sqlcmd -query $compatibilityScript -ServerInstance $ttap-mkp-sql.privatelink.database.windows.net -database $ttap-mkpAMPSaaSDB -Username $963306@healthtranzformdev.com -Password $H5r1V.tVXwR53>B{
 Write-host "## Ran compatibility script against database"
-Invoke-Sqlcmd -inputFile script.sql -ServerInstance $Server -database $Database -Username $User -Password $Pass
+# Invoke-Sqlcmd -inputFile script.sql -ServerInstance $Server -database $Database -Username $User -Password $Pass
+Invoke-Sqlcmd -inputFile script.sql -ServerInstance $ttap-mkp-sql.privatelink.database.windows.net -database $ttap-mkpAMPSaaSDB -Username $963306@healthtranzformdev.com -Password $H5r1V.tVXwR53>B{
 Write-host "## Ran migration against database"	
 
 Remove-Item -Path ../src/AdminSite/appsettings.Development.json
