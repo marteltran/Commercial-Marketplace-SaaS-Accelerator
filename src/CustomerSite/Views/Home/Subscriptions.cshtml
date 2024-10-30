@@ -151,6 +151,10 @@
 
 
 </script> *@
+
+<script src="~/js/sanitize_properties.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.2/purify.min.js"></script>
+
 <script>
     function ViewSubscriptionQuantityDetail(subscriptionId) {
         $.ajax({
@@ -160,7 +164,9 @@
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             success: function (data) {
-                $('#myModal').html(data);
+                var cleandata = DOMPurify.sanitize(data, customConfig);
+                @* $('#myModal').html(data); *@
+                $('#myModal').html(cleandata);
                 $('#myModal').modal();
             },
             error: function () {
@@ -180,7 +186,9 @@
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             success: function (data) {
-                $('#myModal').html(data);
+                var cleandata = DOMPurify.sanitize(data, customConfig);
+                @* $('#myModal').html(data); *@
+                $('#myModal').html(cleandata);
                 $('#myModal').modal();
 
             },
@@ -201,9 +209,9 @@
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             success: function (data) {
-                $('#myModal').html(data);
-               
-                
+                var cleandata = DOMPurify.sanitize(data, customConfig);
+                @* $('#myModal').html(data); *@
+                $('#myModal').html(cleandata);
                 $('#myModal').modal();
                 // const myel = new bootstrap.Modal('#myModal');
                 // document.querySelector('.btn-close').addEventListener('click', () => {
